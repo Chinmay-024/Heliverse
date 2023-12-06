@@ -35,7 +35,7 @@ Heliverse is a web application that allows you to manage users and teams. Users 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/Chinmay-024/Heliverse.git
+   git clone https://github.com/your-username/heliverse-app.git
    ```
 
 2. **Install dependencies:**
