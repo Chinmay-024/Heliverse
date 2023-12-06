@@ -11,8 +11,6 @@ Heliverse is a web application that allows you to manage users and teams. Users 
 - [API Endpoints](#api-endpoints)
 - [Redux Store](#redux-store)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
