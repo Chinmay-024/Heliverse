@@ -39,8 +39,25 @@ export default function Mycard({ user, onDelete }) {
           }}
         />
         <CardContent sx={{ position: "relative" }}>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography
+            style={{ display: "inline-block" }}
+            gutterBottom
+            variant="h6"
+            component="div"
+          >
             {user.first_name}
+          </Typography>
+          <Typography
+            style={{
+              display: "inline-block",
+              marginLeft: "0.2rem",
+              marginTop: "1rem",
+            }}
+            gutterBottom
+            variant="body2"
+            color="text.primary"
+          >
+            {user.last_name}
           </Typography>
           <Typography variant="body2" color="text.primary" noWrap>
             {user.email}

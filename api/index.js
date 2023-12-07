@@ -10,11 +10,7 @@ const app = express();
 dotenv.config({ path: "./.env" });
 
 mongoose
-  .connect(process.env.DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    // useCreateIndex: true,
-  })
+  .connect(process.env.DB)
   .then(() => console.log("DB Connection Successfull"))
   .catch((err) => {
     console.error(err);

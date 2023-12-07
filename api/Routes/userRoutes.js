@@ -13,15 +13,52 @@ router.get("/count", async (req, res) => {
   }
 });
 
-//GET ALL USER
+// GET ALL USERS WITH SEARCH AND FILTERS
 router.get("/", async (req, res) => {
   const page = req.query.page;
   const limit = req.query.limit;
+  const search = req.query.search || "";
+  const domain = req.query.domain || "";
+  const gender = req.query.gender || "";
+  const availability = req.query.availability || "";
+
   try {
-    const users = await User.find()
-      .skip((page - 1) * limit)
-      .limit(parseInt(limit));
-    res.status(200).json(users);
+    const searchRegex = new RegExp(search, "i");
+
+    const filter = {
+      $and: [
+        { $or: [{ first_name: searchRegex }, { last_name: searchRegex }] },
+        { domain: new RegExp(domain, "i") },
+        { gender: new RegExp(gender, "i") },
+        {
+          available:
+            availability !== "" ? availability === "true" : { $exists: true },
+        },
+      ],
+    };
+
+    const totalUsers = await User.countDocuments(filter);
+
+    const calculatedTotalPages = Math.ceil(totalUsers / limit);
+
+    const newPage = Math.min(page, calculatedTotalPages);
+    if (totalUsers > 0) {
+      const users = await User.find(filter)
+        .skip((newPage - 1) * limit)
+        .limit(parseInt(limit));
+
+      res.status(200).json({
+        users,
+        totalPages: calculatedTotalPages,
+        currentPage: newPage,
+      });
+    } else {
+      res.status(200).json({
+        users: [],
+        totalPages: 1,
+        currentPage: 1,
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
